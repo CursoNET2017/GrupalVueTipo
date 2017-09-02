@@ -13,7 +13,7 @@
     </div>
 <!-- DETALLE -->
     <div class="container">
-    <form id= "detalle" class="form-horizontal" v-show="visible">
+    <form id= "detalle" class="form-horizontal" v-show="visible" v-on:submit.prevent="onSubmit">
         {{item}}
          <div class="form-group">
             <label class="col-sm-2 control-label">Categoria: </label>
@@ -41,12 +41,19 @@
             Automatica
         </label>
         </div>
+        <div id="botones" class="centrado">
+            <button id="buttonCrear" v-on:click="crear" class="btn btn-info btn-responsive btninter">Añadir</button>
+            <!--
+            <button id="buttonActualizar" v-on:click="actualizar" class="btn btn-info btn-responsive btninter">Actualizar</button>
+            <button id="buttonBorrar" v-on:click="borrar" class="btn btn-info btn-responsive btninter">Borrar</button>
+            -->
+        </div>        
     </form>
     </div>
   </div>
 </template>
-<script>
 
+<script>
 
 export default {
   name: 'tipo',
@@ -64,8 +71,8 @@ export default {
             type: 'GET',
             url: 'http://localhost:51952/api/TipoTareas',
             success: function (response) {
-                _this.items = JSON.parse(JSON.stringify(response));
-                //_thhis.items = response;
+                //_this.items = JSON.parse(JSON.stringify(response));
+                _this.items = response;
             },
             error : function(){
                 alert('Problemas al cargar el listado');
@@ -74,7 +81,8 @@ export default {
         });
     },
     visibleBorrado: function() {
-        this.visible = !this.visible;
+        //this.visible = !this.visible;
+        this.visible = true;
         this.item.id = '';
         this.item.categoria = '';
         this.item.descripcion = '';
@@ -104,6 +112,35 @@ export default {
         this.item.repetitivo = response.Repetitivo;
         this.item.silenciable = response.Silenciable;
         this.item.automatico = response.Automatico;
+    },
+    onSubmit: function(event){
+        alert('onSubmit');
+        this.getTodos();
+    },
+    crear: function() {
+        let _this = this;
+        let categoria1 = this.item.categoria;
+        let descripcion1 = this.item.descripcion;
+        let repetitivo1 = this.item.repetitivo;
+        let silenciable1 = this.item.silenciable;
+        let automatico1 = this.item.automatico;
+        $.ajax({
+            type: 'POST',
+            url: 'http://localhost:51952/api/TipoTareas/',
+            data: {Categoria: categoria1, Descripcion: descripcion1, Repetitivo: repetitivo1, Silenciable: silenciable1, Automatico: automatico1},
+            success: function (response) {
+                //_this.getTodos();
+                _this.visibleBorrado();
+            },
+            error : function(){
+                alert('Problemas al insertar el item');
+                debugger;
+            },        
+		    complete : function(xhr, status) {
+		        //alert('Creado '+titulo1+' con exito');
+		        //_this.getTodos();
+		    }
+        });
     }
   },
   created() {
