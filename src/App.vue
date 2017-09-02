@@ -1,13 +1,22 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <router-view></router-view>
+    <tipo></tipo>
   </div>
 </template>
 
 <script>
+import tipo from './components/Tipo/Tipo.vue'
+
 export default {
-  name: 'app'
+  name: 'app',
+  data() {
+    return {
+
+    }
+  },
+  components: {
+    tipo
+  }
 }
 </script>
 
