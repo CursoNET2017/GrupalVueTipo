@@ -1,7 +1,7 @@
 <template>
 <div id="tipo">
     <listado v-bind:items="items" v-on:visibleBorradoH="visibleBorrado" v-on:cargarClikMaestroH="cargarClikMaestro"></listado>
-    <detalle v-show="visible" v-bind:item="item" v-on:crearH="crear" v-on:actualizarH="actualizar" v-on:borrarH="borrar"></detalle>
+    <detalle v-show="visible" v-bind:item="item" v-bind:editable="editable" v-on:crearH="crear" v-on:actualizarH="actualizar" v-on:borrarH="borrar"></detalle>
 </div>
 </template>
 
@@ -16,6 +16,7 @@ export default {
     return {
         items: [],
         visible : false,
+        editable: false,
         item:{id: '', categoria: '', descripcion: '',repetitivo: '', silenciable: '',automatico: ''}
     };
   },
@@ -41,6 +42,7 @@ export default {
     visibleBorrado: function() {
         //this.visible = !this.visible;
         this.visible = true;
+        this.editable = false;
         this.item.id = '';
         this.item.categoria = '';
         this.item.descripcion = '';
@@ -55,6 +57,7 @@ export default {
             type : 'GET',     
             success : function(response) {
             //alert('YUPII');
+            _this.editable = true;
             _this.rellenarDatosClick(response);
             },
             error : function(){

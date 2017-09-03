@@ -29,9 +29,9 @@
         </label>
         </div>
         <div id="botones" class="centrado">
-            <button id="buttonCrear" v-on:click="crear" class="btn btn-success btn-responsive btninter">Añadir</button>
-            <button id="buttonActualizar" v-on:click="actualizar" class="btn btn-success btn-responsive btninter">Actualizar</button>
-            <button id="buttonBorrar" v-on:click="borrar" class="btn btn-success btn-responsive btninter">Borrar</button>
+            <button id="buttonCrear" v-on:click="crear" v-bind:disabled="editable" class="btn btn-success btn-responsive btninter">Añadir</button>
+            <button id="buttonActualizar" v-on:click="actualizar" v-bind:disabled="!item.id" class="btn btn-success btn-responsive btninter">Actualizar</button>
+            <button id="buttonBorrar" v-on:click="borrar" v-bind:disabled="!item.id" class="btn btn-success btn-responsive btninter">Borrar</button>
         </div>        
     </form>
     </div>
@@ -42,7 +42,7 @@
 
 export default {
   name: 'detalle',
-  props: ['item'],
+  props: ['item', 'editable'],
   data() {
     return {
     };
