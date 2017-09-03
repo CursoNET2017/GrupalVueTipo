@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import tipo from './components/Tipo/Tipo.vue'
+import tipo from './components/Tipo/TipoPadre.vue'
 
 export default {
   name: 'app',
