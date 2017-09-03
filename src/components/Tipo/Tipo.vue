@@ -43,8 +43,8 @@
         </div>
         <div id="botones" class="centrado">
             <button id="buttonCrear" v-on:click="crear" class="btn btn-info btn-responsive btninter">Añadir</button>
-            <!--
             <button id="buttonActualizar" v-on:click="actualizar" class="btn btn-info btn-responsive btninter">Actualizar</button>
+            <!--
             <button id="buttonBorrar" v-on:click="borrar" class="btn btn-info btn-responsive btninter">Borrar</button>
             -->
         </div>        
@@ -141,6 +141,30 @@ export default {
 		        //_this.getTodos();
 		    }
         });
+    },
+    actualizar: function(){
+        var id1 = this.item.id;
+    	var nombre1 = this.item.nombre;
+	  	var apellidos1 = this.item.apellidos;
+	  	alert(nombre1+' '+apellidos1);
+        let _this = this;
+	  	$.ajax({
+		    url : 'http://localhost:50422/api/Entradas/'+id1,
+		    type : 'PUT',     
+		    dataType : 'json',
+            data: _this.item,
+		    success : function(response) {            
+		        _this.visibleBorrado();
+		    },
+		    error : function(){
+		    	alert('CACA');
+		     	debugger;
+		    },        
+		    complete : function(xhr, status) {
+		        //alert('Actualización con exito');
+		        //_this.getTodos();
+		    }
+	  	});
     }
   },
   created() {
