@@ -44,9 +44,7 @@
         <div id="botones" class="centrado">
             <button id="buttonCrear" v-on:click="crear" class="btn btn-info btn-responsive btninter">Añadir</button>
             <button id="buttonActualizar" v-on:click="actualizar" class="btn btn-info btn-responsive btninter">Actualizar</button>
-            <!--
             <button id="buttonBorrar" v-on:click="borrar" class="btn btn-info btn-responsive btninter">Borrar</button>
-            -->
         </div>        
     </form>
     </div>
@@ -114,7 +112,7 @@ export default {
         this.item.automatico = response.Automatico;
     },
     onSubmit: function(event){
-        alert('onSubmit');
+        //alert('onSubmit');
         this.getTodos();
     },
     crear: function() {
@@ -144,12 +142,9 @@ export default {
     },
     actualizar: function(){
         var id1 = this.item.id;
-    	var nombre1 = this.item.nombre;
-	  	var apellidos1 = this.item.apellidos;
-	  	alert(nombre1+' '+apellidos1);
         let _this = this;
 	  	$.ajax({
-		    url : 'http://localhost:50422/api/Entradas/'+id1,
+		    url : 'http://localhost:51952/api/TipoTareas/'+id1,
 		    type : 'PUT',     
 		    dataType : 'json',
             data: _this.item,
@@ -162,10 +157,30 @@ export default {
 		    },        
 		    complete : function(xhr, status) {
 		        //alert('Actualización con exito');
-		        //_this.getTodos();
+		        _this.getTodos();
 		    }
 	  	});
-    }
+    },
+    borrar: function(){
+        let id1 = this.item.id;
+        let categoria1 = this.item.categoria;
+        let _this = this;
+        $.ajax({
+            type: 'DELETE',
+            url: 'http://localhost:51952/api/TipoTareas/'+id1,
+            success: function () {
+                _this.visibleBorrado();
+            },
+            error : function(){
+                alert('Problemas al borrar el item');
+                debugger;
+            },
+            complete : function() {
+                _this.getTodos();
+                alert('Eliminado con exito '+categoria1);
+            }
+        })
+    }    
   },
   created() {
       this.getTodos();
