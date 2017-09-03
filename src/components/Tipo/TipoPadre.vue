@@ -1,6 +1,7 @@
 <template>
 <div id="tipo">
-    <listado v-bind:items="items"></listado>
+    <listado v-bind:items="items" v-on:visibleBorradoH="visibleBorrado" v-on:cargarClikMaestroH="cargarClikMaestro"></listado>
+    <detalle v-show="visible" v-bind:item="item" v-on:crearH="crear" v-on:actualizarH="actualizar" v-on:borrarH="borrar"></detalle>
 </div>
 </template>
 
@@ -91,7 +92,7 @@ export default {
             },        
 		    complete : function(xhr, status) {
 		        //alert('Creado '+titulo1+' con exito');
-		        //_this.getTodos();
+		        _this.getTodos();
 		    }
         });
     },
@@ -143,7 +144,6 @@ export default {
 }
 </script>
 
-<style>
-    
+<style>  
 
 </style>
